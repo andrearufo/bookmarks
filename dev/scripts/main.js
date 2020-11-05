@@ -3,6 +3,7 @@ var app = new Vue({
 
     data: {
         ux: {
+            fetch: false,
             error: false,
             loading: true,
             success: false
@@ -30,7 +31,21 @@ var app = new Vue({
             this.$http.post('actions/saveLink.php', { url: this.url }, { emulateJSON: true }).then(function(response){
                 this.ux.success = true;
                 this.ux.loading = false;
+                this.ux.fetch = false;
                 this.getLinks();
+            }, function(response){
+                this.ux.error = true;
+                this.ux.loading = false;
+            });
+        },
+
+        fetchLink: function(){
+            this.ux.loading = true;
+
+            this.$http.post('actions/fetchLink.php', { url: this.url }, { emulateJSON: true }).then(function(response){
+                this.ux.success = true;
+                this.ux.fetch = true;
+                this.ux.loading = false;
             }, function(response){
                 this.ux.error = true;
                 this.ux.loading = false;

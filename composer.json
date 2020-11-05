@@ -1,0 +1,11 @@
+{
+    "name": "andrearufo/bookmarks",
+    "type": "project",
+    "authors": [
+        {
+            "name": "andrearufo",
+            "email": "info@andrearufo.it"
+        }
+    ],
+    "require": {}
+}

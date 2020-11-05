@@ -10,7 +10,8 @@
 
     <link rel="stylesheet" href="dist/styles/main.css">
 
-    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.20/lodash.min.js" charset="utf-8"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>
 
 </head>
@@ -35,8 +36,8 @@
                         </div>
                         <div class="col-lg-3">
 
-                            <!-- <button type="button" class="btn btn-secondary">Fetch</button> -->
-                            <button type="submit" class="btn btn-block btn-primary">Save</button>
+                            <button v-if="!fetch" type="button" class="btn btn-block btn-secondary">Fetch</button>
+                            <button v-else type="submit" class="btn btn-block btn-primary">Save</button>
 
                         </div>
                     </div>

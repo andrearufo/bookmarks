@@ -1,7 +1,5 @@
 <?php
 
-if (!isset($_POST['url'])) exit;
-
 $url = htmlspecialchars($_POST['url']);
 
 $response = [
@@ -13,6 +11,7 @@ if ( empty($url) || !filter_var($url, FILTER_VALIDATE_URL) ){
     $response['error'] = 'Not valid url';
 
     header('Content-Type: application/json');
+    http_response_code(400)
     echo json_encode($response);
     die;
 }
