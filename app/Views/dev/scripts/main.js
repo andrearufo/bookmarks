@@ -12,6 +12,12 @@ var app = new Vue({
         bookmarks: []
     },
 
+    computed: {
+        list: function(){
+            return _.orderBy(this.bookmarks, 'created_at', 'desc');
+        }
+    },
+
     methods: {
         getLinks: function(){
             this.ux.loading = true;

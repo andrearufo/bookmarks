@@ -19,8 +19,12 @@ class Link extends Model {
 		}
 	}
 
-	function validate(){
+	private function validate(){
 		return filter_var($this->url, FILTER_VALIDATE_URL);
+	}
+
+	public function get_meta(){
+		return get_meta_tags($this->url);
 	}
 
 }

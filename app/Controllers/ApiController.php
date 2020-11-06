@@ -56,11 +56,11 @@ class ApiController extends Controller{
     public function fetch(Request $request, Response $response, $args) {
         $post = $request->getParsedBody();
         $link = new Link($post['url']);
+        $data = [
+            'link' => $link,
+            'meta' => $link->get_meta()
+        ];
 
-        if (!$link->validate()) {
-            return $this->error('Not valid url provided', $response);
-        }
-
-        return $this->success($link, $response);
+        return $this->success($data, $response);
     }
 }
