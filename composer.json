@@ -1,11 +1,12 @@
 {
-    "name": "andrearufo/bookmarks",
-    "type": "project",
-    "authors": [
-        {
-            "name": "andrearufo",
-            "email": "info@andrearufo.it"
-        }
-    ],
-    "require": {}
+	"autoload": {
+        "psr-4": {"App\\": "app/"},
+        "files": [ "app/helpers.php" ]
+    },
+    "require": {
+        "slim/slim": "4.*",
+        "slim/psr7": "^1.2",
+		"illuminate/database": "^8.13",
+		"robmorgan/phinx": "^0.12.4"
+    }
 }

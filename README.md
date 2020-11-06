@@ -1,2 +1,6 @@
-# bookmarks
-Una raccolta di link interessanti
+```
+composer install
+php vendor/bin/phinx migrate
+php vendor/bin/phinx seed:run
+
+```
