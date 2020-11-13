@@ -7,6 +7,8 @@
         "slim/slim": "4.*",
         "slim/psr7": "^1.2",
 		"illuminate/database": "^8.13",
-		"robmorgan/phinx": "^0.12.4"
+		"robmorgan/phinx": "^0.12.4",
+		"voku/simple_html_dom": "^4.7",
+		"voku/portable-utf8": "^5.4"
     }
 }

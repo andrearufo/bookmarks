@@ -20,45 +20,78 @@
     <div id="app">
         <div class="container">
 
-            <div v-if="ux.loading">
+            <div class="row justify-content-center">
+                <div class="col-lg-6">
 
-                Loading...
+                    <form class="card card-body my-5" method="post" enctype="multipart/form-data" @submit.prevent="saveLink">
+                        <div class="row">
+                            <div class="col-lg-9">
 
-            </div>
-            <div class="content" v-else>
+                                <input type="url" class="form-control" v-model="url">
 
-                <form class="card card-body my-5" method="post" enctype="multipart/form-data" @submit.prevent="saveLink">
-                    <div class="row">
-                        <div class="col-lg-9">
+                            </div>
+                            <div class="col-lg-3">
 
-                            <input type="url" class="form-control" v-model="url">
+                                <button v-if="!ux.fetch" type="button" class="btn btn-block btn-secondary" @click="fetchLink">Fetch</button>
+                                <button v-else type="submit" class="btn btn-block btn-primary">Save</button>
 
+                            </div>
                         </div>
-                        <div class="col-lg-3">
+                    </form>
 
-                            <!-- <button type="button" class="btn btn-secondary">Fetch</button> -->
-                            <button type="submit" class="btn btn-block btn-primary">Save</button>
-
-                        </div>
+                    <div v-if="ux.loading">
+                        Loading...
                     </div>
-                </form>
 
-                <div v-if="list.length == 0" class="alert alert-warning">No bookmarls in list...</div>
+                    <div class="card card-body my-5" v-if="fetch">
+                        <pre>{{ fetch }}</pre>
+                    </div>
 
-                <ul v-else>
-                    <li v-for="item in list" :key="item.id">
-
-                        # {{ item.id }}
-                        <pre>{{ item.url }}</pre>
-                        <pre>{{ item.updated_at }}</pre>
-
-                    </li>
-                </ul>
-
-                <div class="card card-body">
-                    <pre>{{ bookmarks }}</pre>
                 </div>
+            </div>
 
+            <div class="row justify-content-center">
+                <div class="col-lg-6">
+
+                    <div v-if="list.length == 0" class="alert alert-warning">
+                        No bookmarls in list...
+                    </div>
+                    <ul class="list-unstyled" v-else>
+                        <li v-for="item in list" :key="item.id">
+
+                            <div class="card card-body mb-2">
+                                <h5 class="mt-0 mb-1">{{ item.title }}</h5>
+                                <div class="mb-2">
+                                    <a target="_blank" :href="item.url" class="d-block text-truncate">
+                                        <img :src="item.icon" class="mr-1" style="width: 16px;">
+                                        {{ item.url }}
+                                    </a>
+                                </div>
+                                <div>{{ item.description }}</div>
+
+                                <hr>
+
+                                <div class="row align-items-end">
+                                    <div class="col-lg">
+
+                                        <span class="text-muted">{{ item.created_at }}</span>
+
+                                    </div>
+                                    <div class="col-lg text-right">
+
+                                        <button class="btn btn-danger" @click="deleteLink(item.id)">Delete</button>
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <!-- <pre>{{ item }}</pre> -->
+
+                        </li>
+                    </ul>
+
+                </div>
             </div>
 
         </div>

@@ -12,8 +12,8 @@ class ApiController extends Controller{
         $payload = json_encode($data);
         $response->getBody()->write($payload);
         return $response
-            ->withHeader('Content-Type', 'application/json')
-            ->withStatus(201);
+        ->withHeader('Content-Type', 'application/json')
+        ->withStatus(201);
     }
 
     private function error($message, $response){
@@ -22,8 +22,8 @@ class ApiController extends Controller{
         ]);
         $response->getBody()->write($payload);
         return $response
-            ->withHeader('Content-Type', 'application/json')
-            ->withStatus(400);;
+        ->withHeader('Content-Type', 'application/json')
+        ->withStatus(400);;
     }
 
     public function index(Request $request, Response $response, $args) {
@@ -55,12 +55,29 @@ class ApiController extends Controller{
 
     public function fetch(Request $request, Response $response, $args) {
         $post = $request->getParsedBody();
-        $link = new Link($post['url']);
-        $data = [
-            'link' => $link,
-            'meta' => $link->get_meta()
-        ];
+        $data['link'] = new Link($post['url']);
 
         return $this->success($data, $response);
+    }
+
+    public function delete(Request $request, Response $response, $args) {
+        $post = $request->getParsedBody();
+
+        if(!isset($post['id']) || !$post['id']){
+            return $this->error('The id is required', $response);
+        }
+
+        $id = $post['id'];
+        $link = Link::findOrFail($id);
+
+        if ($link->delete()) {
+            $data = [
+                'message' => 'Link deleted'
+            ];
+            return $this->success($data, $response);
+        }else{
+            return $this->error('Not deleted!', $response);
+        }
+
     }
 }

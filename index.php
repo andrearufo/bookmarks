@@ -29,6 +29,7 @@ $app->group('/api', function (RouteCollectorProxy $group) {
     $group->get('/list', 'App\Controllers\ApiController:list')->setName('api-list');
     $group->post('/save', 'App\Controllers\ApiController:save')->setName('api-save');
     $group->post('/fetch', 'App\Controllers\ApiController:fetch')->setName('api-fetch');
+    $group->post('/delete', 'App\Controllers\ApiController:delete')->setName('api-delete');
 });
 
     // // Disable errors in production
