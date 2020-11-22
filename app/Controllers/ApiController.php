@@ -12,8 +12,8 @@ class ApiController extends Controller{
         $payload = json_encode($data);
         $response->getBody()->write($payload);
         return $response
-        ->withHeader('Content-Type', 'application/json')
-        ->withStatus(201);
+	        ->withHeader('Content-Type', 'application/json')
+	        ->withStatus(201);
     }
 
     private function error($message, $response){
@@ -22,8 +22,8 @@ class ApiController extends Controller{
         ]);
         $response->getBody()->write($payload);
         return $response
-        ->withHeader('Content-Type', 'application/json')
-        ->withStatus(400);;
+	        ->withHeader('Content-Type', 'application/json')
+	        ->withStatus(400);;
     }
 
     public function index(Request $request, Response $response, $args) {

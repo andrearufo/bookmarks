@@ -41,26 +41,18 @@ class Link extends Model {
 			}
 		}
 
-		$linkdata = [];
-		foreach ($dom->find('link') as $link) {
-			if ($link->hasAttribute('href')) {
-				$atrs = explode(' ', $link->getAttribute('rel'));
-
-				foreach ($atrs as $atr) {
-					$linkdata[$atr][] = $link->getAttribute('href');
-				}
-			}
-		}
-
 		$title = $dom->find('title', 0)->innerText();
-		$description = implode(', ', $metadata['description']);
-		$icon = end($linkdata['icon']);
+		$description = isset($metadata['description']) ? implode(', ', $metadata['description']) : '';
 
 		$this->title = $title;
 		$this->description = $description;
-		$this->icon = $icon;
+		$this->icon = $this->get_favicon();
 
 		return;
+	}
+
+	public function get_favicon(){
+		return 'http://www.google.com/s2/favicons?domain='.$this->url;
 	}
 
 }

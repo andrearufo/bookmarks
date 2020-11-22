@@ -17,11 +17,8 @@ class LinksSeeder extends AbstractSeed
     {
         $data = [
             [
-                'url'     => 'https://www.andrearufo.it/',
-                'created' => date('Y-m-d H:i:s'),
-            ],[
-                'url'     => 'https://www.mandarinoadv.com/',
-                'created' => date('Y-m-d H:i:s'),
+                'url' => 'https://www.andrearufo.it/',
+                'created_at' => date('Y-m-d H:i:s'),
             ]
         ];
 

@@ -21,7 +21,10 @@ final class CreateLinkTable extends AbstractMigration
 
         $table = $this->table('links');
         $table->addColumn('url', 'string')
-            ->addColumn('created_at', 'datetime', ['null' => true])
+			->addColumn('title', 'string', ['null' => true])
+			->addColumn('description', 'text', ['null' => true])
+			->addColumn('icon', 'text', ['null' => true])
+			->addColumn('created_at', 'datetime', ['null' => true])
             ->addColumn('updated_at', 'datetime', ['null' => true])
             ->create();
 

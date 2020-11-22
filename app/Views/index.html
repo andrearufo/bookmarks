@@ -2,102 +2,106 @@
 <html lang="en">
 <head>
 
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>Bookmarks</title>
+	<title>Bookmarks</title>
 
-    <link rel="stylesheet" href="public/styles/main.css">
+	<link rel="stylesheet" href="public/styles/main.css">
 
-    <script src="https://cdn.jsdelivr.net/npm/lodash"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>
+	<script src="https://cdn.jsdelivr.net/npm/lodash"></script>
+	<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" charset="utf-8"></script>
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 
 </head>
 <body>
 
-    <div id="app">
-        <div class="container">
+	<div id="app">
+		<div class="container">
 
-            <div class="row justify-content-center">
-                <div class="col-lg-6">
+			<div class="row justify-content-center">
+				<div class="col-lg-6">
 
-                    <form class="card card-body my-5" method="post" enctype="multipart/form-data" @submit.prevent="saveLink">
-                        <div class="row">
-                            <div class="col-lg-9">
+					<form class="card card-body my-5" method="post" enctype="multipart/form-data" @submit.prevent="fetchLink">
+						<div class="row">
+							<div class="col-lg-9">
 
-                                <input type="url" class="form-control" v-model="url">
+								<input type="url" class="form-control" v-model="url" placeholder="https://">
 
-                            </div>
-                            <div class="col-lg-3">
+							</div>
+							<div class="col-lg-3">
 
-                                <button v-if="!ux.fetch" type="button" class="btn btn-block btn-secondary" @click="fetchLink">Fetch</button>
-                                <button v-else type="submit" class="btn btn-block btn-primary">Save</button>
+								<button type="submit" class="btn btn-block btn-secondary">Fetch</button>
 
-                            </div>
-                        </div>
-                    </form>
+							</div>
+						</div>
+					</form>
 
-                    <div v-if="ux.loading">
-                        Loading...
-                    </div>
+					<div v-if="ux.loading">
+						Loading...
+					</div>
+					<div class="card card-body my-5" v-if="fetch">
+						<pre>{{ fetch }}</pre>
+						<button type="submit" class="btn btn-block btn-primary" @click="saveLink">Save</button>
+					</div>
 
-                    <div class="card card-body my-5" v-if="fetch">
-                        <pre>{{ fetch }}</pre>
-                    </div>
+				</div>
+			</div>
 
-                </div>
-            </div>
+			<div class="row justify-content-center">
+				<div class="col-lg-6">
 
-            <div class="row justify-content-center">
-                <div class="col-lg-6">
+					<div v-if="list.length == 0" class="alert alert-warning">
+						No bookmarls in list...
+					</div>
+					<ul class="list-unstyled" v-else>
+						<li v-for="item in list" :key="item.id">
 
-                    <div v-if="list.length == 0" class="alert alert-warning">
-                        No bookmarls in list...
-                    </div>
-                    <ul class="list-unstyled" v-else>
-                        <li v-for="item in list" :key="item.id">
+							<div class="card card-body mb-2">
+								<h5 class="mt-0 mb-1">{{ item.title }}</h5>
+								<div class="mb-2">
+									<a target="_blank" :href="item.url" class="d-block text-truncate">
+										<img :src="item.icon" class="mr-1" style="width: 16px;">
+										{{ item.url }}
+									</a>
+								</div>
+								<div>{{ item.description }}</div>
 
-                            <div class="card card-body mb-2">
-                                <h5 class="mt-0 mb-1">{{ item.title }}</h5>
-                                <div class="mb-2">
-                                    <a target="_blank" :href="item.url" class="d-block text-truncate">
-                                        <img :src="item.icon" class="mr-1" style="width: 16px;">
-                                        {{ item.url }}
-                                    </a>
-                                </div>
-                                <div>{{ item.description }}</div>
+								<hr>
 
-                                <hr>
+								<div class="row align-items-end">
+									<div class="col-lg">
 
-                                <div class="row align-items-end">
-                                    <div class="col-lg">
+										<span class="text-muted">{{ item.created_at | format_date('MMM Do YY') }}</span>
 
-                                        <span class="text-muted">{{ item.created_at }}</span>
+									</div>
+									<div class="col-lg text-right">
 
-                                    </div>
-                                    <div class="col-lg text-right">
+										<button class="btn btn-sm btn-outline-danger" @click="deleteLink(item.id)">
+											<i class="fas fa-trash"></i>
+										</button>
 
-                                        <button class="btn btn-danger" @click="deleteLink(item.id)">Delete</button>
+									</div>
+								</div>
 
-                                    </div>
-                                </div>
+							</div>
 
-                            </div>
+							<!-- <pre>{{ item }}</pre> -->
 
-                            <!-- <pre>{{ item }}</pre> -->
+						</li>
+					</ul>
 
-                        </li>
-                    </ul>
+				</div>
+			</div>
 
-                </div>
-            </div>
+		</div>
+	</div>
 
-        </div>
-    </div>
-
-    <script src="public/scripts/main.js"></script>
+	<script src="public/scripts/main.js"></script>
 
 </body>
 </html>
